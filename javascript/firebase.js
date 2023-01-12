@@ -4,9 +4,11 @@ import {
   getFirestore,
   collection,
   addDoc,
+  doc,
+  deleteDoc,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"
 
-import { todoListTransform } from "./todoListTransform"
+import { todoListTransform } from "./todoListTransform.js"
 // TODO: Add SDKs for Firebase products that you want to use
 // https://firebase.google.com/docs/web/setup#available-libraries
 
@@ -26,9 +28,13 @@ const app = initializeApp(firebaseConfig)
 export const db = getFirestore(app)
 
 export const saveTask = (title, description, quantity) => {
-  addDoc(collection(db, "tasks"), {
+  addDoc(collection(db, "todo"), {
     title,
     description,
     quantity,
   })
+}
+
+export const eraseTask = (id) => {
+  deleteDoc(doc(db, "todo", id))
 }
