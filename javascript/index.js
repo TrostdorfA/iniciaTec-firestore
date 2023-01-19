@@ -1,9 +1,9 @@
 const taskForm = document.getElementById("task-form")
+const getTasksButton = document.getElementById("get-tasks-button")
 // TODO: Create a new task in firestore database
 
-import { eraseTask, saveTask } from "./firebase.js"
+import { saveTask, getTasks } from "./firebase.js"
 
-console.log("taskForm", taskForm)
 taskForm.addEventListener("submit", async (e) => {
   e.preventDefault()
   const title = taskForm["task-title"].value
@@ -18,6 +18,14 @@ taskForm.addEventListener("submit", async (e) => {
     console.log(error)
   }
 
+  try {
+    await getDocs()
+    console.log("Task saved")
+    taskForm.reset()
+  } catch (error) {
+    console.log(error)
+  }
+
   // try {
   //   await eraseTask("1")
   //   console.log("Task erased")
@@ -25,3 +33,15 @@ taskForm.addEventListener("submit", async (e) => {
   //   console.log(error)
   // }
 })
+
+window.addEventListener("DOMContentLoaded", async (e) => {
+  const querySnapshot = await getTasks()
+  console.log("querySnapshot", querySnapshot)
+  querySnapshot.forEach((doc) => {
+    console.log(`${doc.id} => ${doc.data()}`)
+  })
+})
+
+// renderizar en el dom
+
+const taskList = document.getElementById("task-list")

@@ -4,8 +4,7 @@ import {
   getFirestore,
   collection,
   addDoc,
-  doc,
-  deleteDoc,
+  getDocs,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"
 
 import { todoListTransform } from "./todoListTransform.js"
@@ -35,6 +34,4 @@ export const saveTask = (title, description, quantity) => {
   })
 }
 
-export const eraseTask = (id) => {
-  deleteDoc(doc(db, "todo", id))
-}
+export const getTasks = () => getDocs(collection(db, "todo"))
