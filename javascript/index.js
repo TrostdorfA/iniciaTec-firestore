@@ -2,7 +2,8 @@ const taskForm = document.getElementById("task-form")
 const getTasksButton = document.getElementById("get-tasks-button")
 // TODO: Create a new task in firestore database
 
-import { saveTask, getTasks } from "./firebase.js"
+import { saveTask, getTasks, db, auth } from "./firebase.js"
+import { createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"
 
 taskForm.addEventListener("submit", async (e) => {
   e.preventDefault()
@@ -45,3 +46,27 @@ window.addEventListener("DOMContentLoaded", async (e) => {
 // renderizar en el dom
 
 const taskList = document.getElementById("task-list")
+
+const loginForm = document.querySelector("#login-form")
+console.log("login-form", loginForm)
+
+loginForm.addEventListener("submit", async (e) => {
+  e.preventDefault()
+  // Create an user with user and password
+
+  const email = loginForm["email"].value
+  const password = loginForm["password"].value
+
+  try {
+    const userCredentials = await createUserWithEmailAndPassword(auth, email, password)
+    console.log("userCredentials", userCredentials)
+  } catch (error) {
+    console.log("error", error.code)
+    if(error.code === "auth/email-already-in-use"){
+      alert("El correo ya esta en uso")
+  }
+  }
+  
+
+  console.log("auth", auth)
+})

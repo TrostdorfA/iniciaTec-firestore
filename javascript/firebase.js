@@ -6,6 +6,7 @@ import {
   addDoc,
   getDocs,
 } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-firestore.js"
+import { getAuth } from "https://www.gstatic.com/firebasejs/9.15.0/firebase-auth.js"
 
 import { todoListTransform } from "./todoListTransform.js"
 // TODO: Add SDKs for Firebase products that you want to use
@@ -35,3 +36,5 @@ export const saveTask = (title, description, quantity) => {
 }
 
 export const getTasks = () => getDocs(collection(db, "todo"))
+
+export const auth = getAuth(app)
